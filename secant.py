@@ -1,48 +1,27 @@
-import matplotlib.pyplot as plt
-
-
-# Fungsi
+import math
 def f(x):
-    return x**3 - x - 2
+    return x - math.cos(x)
 
-def secant(f, x0, x1, tol=1e-6, max_iter=100):
+def secant(x0, x1, tol=1e-15, max_iter=20):
 
-    errors = []
+    print("Secant Method untuk f(x)=x-cos(x)")
+    print("------------------------------------------------")
 
-    print("Metode Secant")
-    print("---------------------------------------------------")
-    print("Iter |    x(i-1)    x(i)      Error")
-    print("---------------------------------------------------")
+    print(f"Iterasi 1: {x0:.15f}")
+    print(f"Iterasi 2: {x1:.15f}")
 
-    for i in range(1, max_iter+1):
+    for i in range(3, max_iter+1):
 
-        if (f(x1) - f(x0)) == 0:
-            print("Pembagi nol! Metode gagal.")
-            return None
+        if f(x1) - f(x0) == 0:
+            print("Pembagi nol, metode berhenti")
+            return
 
-        x2 = x1 - (f(x1)*(x1-x0))/(f(x1)-f(x0))
-        error = abs(x2 - x1)
-        errors.append(error)
+        x2 = x1 - f(x1)*(x1 - x0)/(f(x1) - f(x0))
 
-        print(f"{i:3d} | {x0:.6f}   {x1:.6f}   {error:.6f}")
+        print(f"Iterasi {i}: {x2:.15f}")
 
-        if error < tol:
-            print("---------------------------------------------------")
-            print("Akar ditemukan:", x2)
-            print("Jumlah iterasi:", i)
+        if abs(x2 - x1) < tol:
             break
 
-        x0 = x1
-        x1 = x2
-
-    # 📊 Grafik Konvergensi
-    plt.figure()
-    plt.plot(range(1, len(errors)+1), errors)
-    plt.title("Grafik Konvergensi Metode Secant")
-    plt.xlabel("Iterasi")
-    plt.ylabel("Error")
-    plt.show()
-
-
-# PEMANGGILAN PROGRAM
-secant(f, 1, 2)
+        x0, x1 = x1, x2
+secant(0.6, 0.8)

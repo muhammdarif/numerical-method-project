@@ -1,47 +1,26 @@
-import matplotlib.pyplot as plt
-
-
+import math
 def f(x):
-    return x**3 - x - 2
+    return x - math.cos(x)
 
-def bisection(f, a, b, tol=1e-6, max_iter=100):
+def bisection(a, b, tol=1e-15, max_iter=20):
 
-    errors = []
-    c_old = a
-
-    print("Metode Bisection")
-    print("---------------------------------------------------")
-    print("Iter |     c        f(c)        Error")
-    print("---------------------------------------------------")
+    if f(a)*f(b) > 0:
+        print("Interval tidak valid")
+        return
+    
+    print("Bisection Method untuk f(x)=x-cos(x)")
+    print("------------------------------------------------")
 
     for i in range(1, max_iter+1):
-        c = (a+b)/2
-        fc = f(c)
-        error = abs(c - c_old)
-        errors.append(error)
+        c = (a + b) / 2
+        
+        print(f"Iterasi {i}: {c:.15f}")
 
-        print(f"{i:3d} | {c:.6f}   {fc:.6f}   {error:.6f}")
-
-        if fc == 0 or error < tol:
-            print("---------------------------------------------------")
-            print("Akar ditemukan:", c)
-            print("Jumlah iterasi:", i)
+        if abs(f(c)) < tol:
             break
 
-        if f(a)*fc < 0:
+        if f(a)*f(c) < 0:
             b = c
         else:
             a = c
-
-        c_old = c
-
-    # 📊 Grafik Konvergensi
-    plt.figure()
-    plt.plot(range(1, len(errors)+1), errors)
-    plt.title("Grafik Konvergensi Metode Bisection")
-    plt.xlabel("Iterasi")
-    plt.ylabel("Error")
-    plt.show()
-
-
-bisection(f, 1, 2)
+bisection(0.6, 0.8)

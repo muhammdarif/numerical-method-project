@@ -1,51 +1,20 @@
-import matplotlib.pyplot as plt
-
-
-# Fungsi
+import math
 def f(x):
-    return x**3 - x - 2
+    return x - math.cos(x)
 
-# Turunan fungsi
 def df(x):
-    return 3*x**2 - 1
+    return 1 + math.sin(x)
 
-def newton(f, df, x0, tol=1e-6, max_iter=100):
+def newton(x0, tol=1e-15, max_iter=20):
 
-    errors = []
+    print("Newton Method untuk f(x)=x-cos(x)")
+    print("------------------------------------------------")
 
-    print("Metode Newton-Raphson")
-    print("---------------------------------------------------")
-    print("Iter |    x(i)      f(x)        Error")
-    print("---------------------------------------------------")
-
+    x = x0
     for i in range(1, max_iter+1):
-
-        if df(x0) == 0:
-            print("Turunan nol! Metode gagal.")
-            return None
-
-        x1 = x0 - f(x0)/df(x0)
-        error = abs(x1 - x0)
-        errors.append(error)
-
-        print(f"{i:3d} | {x0:.6f}   {f(x0):.6f}   {error:.6f}")
-
-        if error < tol:
-            print("---------------------------------------------------")
-            print("Akar ditemukan:", x1)
-            print("Jumlah iterasi:", i)
+        print(f"Iterasi {i}: {x:.15f}")
+        x_new = x - f(x)/df(x)
+        if abs(x_new - x) < tol:
             break
-
-        x0 = x1
-
-    # 📊 Grafik Konvergensi
-    plt.figure()
-    plt.plot(range(1, len(errors)+1), errors)
-    plt.title("Grafik Konvergensi Metode Newton-Raphson")
-    plt.xlabel("Iterasi")
-    plt.ylabel("Error")
-    plt.show()
-
-
-# PEMANGGILAN PROGRAM
-newton(f, df, 1.5)
+        x = x_new
+newton(0.6)
