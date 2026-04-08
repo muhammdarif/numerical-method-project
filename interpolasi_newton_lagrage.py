@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Data
-x = np.array([0.24, 0.65, 0.95, 1.24])
-y = np.array([0.23, -0.23, -1.1, -0.45])
+x = np.array([0,1,2,3,4], dtype=float)
+y = np.array([1,3,2,5,4], dtype=float)
 
 # =============================
 # 🔹 LAGRANGE
